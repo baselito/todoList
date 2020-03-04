@@ -154,7 +154,6 @@ var todo_1 = require("./models/todo");
 window.onload = function () {
   var m = new Main();
   m.start();
-  m.newElement();
 };
 
 var Main =
@@ -164,6 +163,7 @@ function () {
     _classCallCheck(this, Main);
 
     this.todos = [];
+    this.newElement = this.newElement.bind(this);
   }
 
   _createClass(Main, [{
@@ -171,16 +171,24 @@ function () {
     value: function generateHtml(todo) {
       var _this = this;
 
-      var divElement = document.createElement("div");
-      var descrContainer = document.createElement("div");
-      var descrText = document.createElement("span");
-      descrText.innerHTML = todo.description + " " + todo.date.toLocaleTimeString();
-      todo.done ? descrText.className = "done" : descrText.className = "";
-      descrContainer.appendChild(descrText);
-      divElement.appendChild(descrContainer);
-      var container = document.getElementById("container");
-      container.appendChild(divElement);
-      descrText.addEventListener("click", function () {
+      var allTodos = document.createElement("div");
+      var todoText = document.createElement("div");
+      allTodos.appendChild(todoText);
+      todoText.innerHTML = todo.description + " " + todo.date.toLocaleTimeString();
+
+      if (todo.done == true) {
+        todoText.className = "done";
+        var container = document.getElementById("doneDiv");
+        container.appendChild(allTodos);
+      } else {
+        todoText.className = "notdone";
+
+        var _container = document.getElementById("todoDiv");
+
+        _container.appendChild(allTodos);
+      }
+
+      todoText.addEventListener("click", function () {
         todo.done = !todo.done;
 
         _this.updatedTodoList();
@@ -191,34 +199,42 @@ function () {
     value: function start() {
       var _this2 = this;
 
-      var firstTodo1 = new todo_1.Todo(1, new Date(), "Test 1");
-      var firstTodo2 = new todo_1.Todo(2, new Date(), "Test 2");
-      var firstTodo3 = new todo_1.Todo(3, new Date(), "Test 3");
-      this.todos.push(firstTodo1);
-      this.todos.push(firstTodo2);
-      this.todos.push(firstTodo3);
+      // let firstTodo1 = new Todo(1, new Date(), "Test 1");
+      // let firstTodo2 = new Todo(2, new Date(), "Test 2");
+      // let firstTodo3 = new Todo(3, new Date(), "Test 3");
+      // this.todos.push(firstTodo1);
+      // this.todos.push(firstTodo2);
+      // this.todos.push(firstTodo3);
       this.todos.forEach(function (todo) {
         console.log(todo);
 
         _this2.generateHtml(todo);
       });
+      var input = document.getElementById("addBtn");
+
+      if (input !== null) {
+        input.addEventListener("click", this.newElement);
+      }
     }
   }, {
     key: "newElement",
     value: function newElement() {
-      var _a;
+      var input = document.getElementById("myInput");
 
-      var inputValue = "";
-      inputValue = (_a = document.getElementById("myInput")) === null || _a === void 0 ? void 0 : _a.nodeValue;
-      var t = document.createTextNode(inputValue);
-      console.log(inputValue);
+      if (input !== null) {
+        var newValue = input.value;
+        var myTodo = new todo_1.Todo(this.todos.length + 1, new Date(), newValue);
+        this.todos.push(myTodo);
+        this.updatedTodoList();
+      }
     }
   }, {
     key: "updatedTodoList",
     value: function updatedTodoList() {
       var _this3 = this;
 
-      document.getElementById("container").innerHTML = "";
+      document.getElementById("todoDiv").innerHTML = "";
+      document.getElementById("doneDiv").innerHTML = "";
       this.todos.forEach(function (todo) {
         console.log(todo);
 
@@ -257,7 +273,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58625" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56104" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
