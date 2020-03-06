@@ -126,10 +126,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var Todo = function Todo(id, date, description) {
+var Todo = function Todo(date, description) {
   _classCallCheck(this, Todo);
 
-  this.id = id;
   this.date = date;
   this.description = description;
   this.done = false;
@@ -164,6 +163,7 @@ function () {
 
     this.todos = [];
     this.newElement = this.newElement.bind(this);
+    this.swapArrayElements = this.swapArrayElements.bind(this);
   }
 
   _createClass(Main, [{
@@ -173,7 +173,17 @@ function () {
 
       var allTodos = document.createElement("div");
       var todoText = document.createElement("div");
+      var arrowContainer = document.createElement("div");
+      var arrowUp = document.createElement("div");
+      var arrowDown = document.createElement("div");
+      arrowContainer.appendChild(arrowUp);
+      arrowContainer.appendChild(arrowDown);
       allTodos.appendChild(todoText);
+      allTodos.appendChild(arrowContainer);
+      allTodos.className = "allTodos";
+      arrowContainer.className = "arrowContainer";
+      arrowUp.className = "fas fa-arrow-circle-up arrows";
+      arrowDown.className = "fas fa-arrow-circle-down arrows";
       todoText.innerHTML = todo.description + " " + todo.date.toLocaleTimeString();
 
       if (todo.done == true) {
@@ -193,18 +203,22 @@ function () {
 
         _this.updatedTodoList();
       });
+      arrowUp.addEventListener("click", function () {
+        _this.swapArrayElements(_this.todos, _this.todos.indexOf(todo), _this.todos.indexOf(todo) - 1);
+
+        _this.updatedTodoList();
+      });
+      arrowDown.addEventListener("click", function () {
+        _this.swapArrayElements(_this.todos, _this.todos.indexOf(todo), _this.todos.indexOf(todo) + 1);
+
+        _this.updatedTodoList();
+      });
     }
   }, {
     key: "start",
     value: function start() {
       var _this2 = this;
 
-      // let firstTodo1 = new Todo(1, new Date(), "Test 1");
-      // let firstTodo2 = new Todo(2, new Date(), "Test 2");
-      // let firstTodo3 = new Todo(3, new Date(), "Test 3");
-      // this.todos.push(firstTodo1);
-      // this.todos.push(firstTodo2);
-      // this.todos.push(firstTodo3);
       this.todos.forEach(function (todo) {
         console.log(todo);
 
@@ -223,8 +237,18 @@ function () {
 
       if (input !== null) {
         var newValue = input.value;
-        var myTodo = new todo_1.Todo(this.todos.length + 1, new Date(), newValue);
+        var myTodo = new todo_1.Todo(new Date(), newValue);
         this.todos.push(myTodo);
+        this.updatedTodoList();
+      }
+    }
+  }, {
+    key: "swapArrayElements",
+    value: function swapArrayElements(arr, indexA, indexB) {
+      if (indexA > indexB && indexA > 0 || indexA < indexB && indexA < arr.length - 1) {
+        var temp = arr[indexA];
+        arr[indexA] = arr[indexB];
+        arr[indexB] = temp;
         this.updatedTodoList();
       }
     }
@@ -273,7 +297,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56104" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60768" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

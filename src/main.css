@@ -34,15 +34,23 @@
   clear: both;
 }
 
+.allTodos {
+  display: block;
+  height: 24px;
+  justify-content: center;
+}
+
 .notdone {
   margin: 0;
   padding: 0;
+  display: inline-flex;
 }
 .done {
   text-decoration: line-through;
   margin: 0;
   padding: 0;
-  align-self: flex-start;
+  display: inline-flex;
+  /* align-self: flex-start; */
 }
 
 .todocontainer {
@@ -52,7 +60,7 @@
   background-color: orange;
   min-height: auto;
   vertical-align: top;
-  align-self: flex-start;
+  /* align-self: flex-start; */
 }
 
 .donecontainer {
@@ -63,4 +71,15 @@
   min-height: auto;
   vertical-align: top;
   align-self: flex-start;
+}
+
+.arrowContainer {
+  display: flex;
+  float: right;
+  height: inherit;
+  justify-content: center;
+}
+
+.arrows {
+  align-self: center;
 }

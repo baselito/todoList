@@ -1,0 +1,69 @@
+#container {
+  height: auto;
+  margin: 10px auto;
+  width: 50%;
+  justify-content: flex-start;
+  align-items: flex-start;
+  display: flex;
+}
+
+.addBtn {
+  padding: 10px;
+  width: 25%;
+  background: #d9d9d9;
+  color: #555;
+  float: left;
+  text-align: center;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+  border-radius: 0;
+}
+
+.header {
+  background-color: #f44336;
+  padding: 30px 40px;
+  color: white;
+  text-align: center;
+}
+
+/* Clear floats after the header */
+.header:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.notdone {
+  margin: 0;
+  padding: 0;
+}
+.done {
+  text-decoration: line-through;
+  margin: 0;
+  padding: 0;
+  align-self: flex-start;
+}
+
+.todocontainer {
+  display: inline-block;
+  width: 50%;
+  margin: 0;
+  background-color: orange;
+  min-height: auto;
+  vertical-align: top;
+  align-self: flex-start;
+}
+
+.donecontainer {
+  display: inline-block;
+  width: 50%;
+  margin: 0;
+  background-color: green;
+  min-height: auto;
+  vertical-align: top;
+  align-self: flex-start;
+}
+
+
+/*# sourceMappingURL=/main.9a83caef.css.map */

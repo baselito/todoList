@@ -10,12 +10,25 @@ class Main {
 
   constructor() {
     this.newElement = this.newElement.bind(this);
+    this.swapArrayElements = this.swapArrayElements.bind(this);
   }
 
   generateHtml(todo: Todo) {
     let allTodos = document.createElement("div");
     let todoText = document.createElement("div");
+    let arrowContainer = document.createElement("div");
+    let arrowUp = document.createElement("div");
+    let arrowDown = document.createElement("div");
+
+    arrowContainer.appendChild(arrowUp);
+    arrowContainer.appendChild(arrowDown);
     allTodos.appendChild(todoText);
+    allTodos.appendChild(arrowContainer);
+
+    allTodos.className = "allTodos";
+    arrowContainer.className = "arrowContainer";
+    arrowUp.className = "fas fa-arrow-circle-up arrows";
+    arrowDown.className = "fas fa-arrow-circle-down arrows";
 
     todoText.innerHTML =
       todo.description + " " + todo.date.toLocaleTimeString();
@@ -34,17 +47,25 @@ class Main {
       todo.done = !todo.done;
       this.updatedTodoList();
     });
+    arrowUp.addEventListener("click", () => {
+      this.swapArrayElements(
+        this.todos,
+        this.todos.indexOf(todo),
+        this.todos.indexOf(todo) - 1
+      );
+      this.updatedTodoList();
+    });
+    arrowDown.addEventListener("click", () => {
+      this.swapArrayElements(
+        this.todos,
+        this.todos.indexOf(todo),
+        this.todos.indexOf(todo) + 1
+      );
+      this.updatedTodoList();
+    });
   }
 
   start() {
-    // let firstTodo1 = new Todo(1, new Date(), "Test 1");
-    // let firstTodo2 = new Todo(2, new Date(), "Test 2");
-    // let firstTodo3 = new Todo(3, new Date(), "Test 3");
-
-    // this.todos.push(firstTodo1);
-    // this.todos.push(firstTodo2);
-    // this.todos.push(firstTodo3);
-
     this.todos.forEach(todo => {
       console.log(todo);
       this.generateHtml(todo);
@@ -60,9 +81,21 @@ class Main {
     let input = document.getElementById("myInput") as HTMLInputElement;
     if (input !== null) {
       let newValue = input.value;
-      let myTodo = new Todo(this.todos.length + 1, new Date(), newValue);
+      let myTodo = new Todo(new Date(), newValue);
 
       this.todos.push(myTodo);
+      this.updatedTodoList();
+    }
+  }
+
+  swapArrayElements(arr: Todo[], indexA: number, indexB: number) {
+    if (
+      (indexA > indexB && indexA > 0) ||
+      (indexA < indexB && indexA < arr.length - 1)
+    ) {
+      let temp = arr[indexA];
+      arr[indexA] = arr[indexB];
+      arr[indexB] = temp;
       this.updatedTodoList();
     }
   }
