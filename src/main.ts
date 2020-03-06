@@ -16,19 +16,22 @@ class Main {
   generateHtml(todo: Todo) {
     let allTodos = document.createElement("div");
     let todoText = document.createElement("div");
-    let arrowContainer = document.createElement("div");
+    let todoButtons = document.createElement("div");
     let arrowUp = document.createElement("div");
     let arrowDown = document.createElement("div");
+    let deleteBtn = document.createElement("div");
 
-    arrowContainer.appendChild(arrowUp);
-    arrowContainer.appendChild(arrowDown);
+    todoButtons.appendChild(arrowUp);
+    todoButtons.appendChild(arrowDown);
     allTodos.appendChild(todoText);
-    allTodos.appendChild(arrowContainer);
+    allTodos.appendChild(todoButtons);
+    todoButtons.appendChild(deleteBtn);
 
     allTodos.className = "allTodos";
-    arrowContainer.className = "arrowContainer";
+    todoButtons.className = "arrowContainer";
     arrowUp.className = "fas fa-arrow-circle-up arrows";
     arrowDown.className = "fas fa-arrow-circle-down arrows";
+    deleteBtn.className = "fas fa-trash-alt delete";
 
     todoText.innerHTML =
       todo.description + " " + todo.date.toLocaleTimeString();
@@ -61,6 +64,10 @@ class Main {
         this.todos.indexOf(todo),
         this.todos.indexOf(todo) + 1
       );
+      this.updatedTodoList();
+    });
+    deleteBtn.addEventListener("click", () => {
+      this.todos.splice(this.todos.indexOf(todo), 1);
       this.updatedTodoList();
     });
   }

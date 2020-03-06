@@ -173,17 +173,20 @@ function () {
 
       var allTodos = document.createElement("div");
       var todoText = document.createElement("div");
-      var arrowContainer = document.createElement("div");
+      var todoButtons = document.createElement("div");
       var arrowUp = document.createElement("div");
       var arrowDown = document.createElement("div");
-      arrowContainer.appendChild(arrowUp);
-      arrowContainer.appendChild(arrowDown);
+      var deleteBtn = document.createElement("div");
+      todoButtons.appendChild(arrowUp);
+      todoButtons.appendChild(arrowDown);
       allTodos.appendChild(todoText);
-      allTodos.appendChild(arrowContainer);
+      allTodos.appendChild(todoButtons);
+      todoButtons.appendChild(deleteBtn);
       allTodos.className = "allTodos";
-      arrowContainer.className = "arrowContainer";
+      todoButtons.className = "arrowContainer";
       arrowUp.className = "fas fa-arrow-circle-up arrows";
       arrowDown.className = "fas fa-arrow-circle-down arrows";
+      deleteBtn.className = "fas fa-trash-alt delete";
       todoText.innerHTML = todo.description + " " + todo.date.toLocaleTimeString();
 
       if (todo.done == true) {
@@ -210,6 +213,11 @@ function () {
       });
       arrowDown.addEventListener("click", function () {
         _this.swapArrayElements(_this.todos, _this.todos.indexOf(todo), _this.todos.indexOf(todo) + 1);
+
+        _this.updatedTodoList();
+      });
+      deleteBtn.addEventListener("click", function () {
+        _this.todos.splice(_this.todos.indexOf(todo), 1);
 
         _this.updatedTodoList();
       });
